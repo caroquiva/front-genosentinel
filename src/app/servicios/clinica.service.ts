@@ -12,21 +12,21 @@ export class ClinicaService {
 
   constructor(private httpCliente: HttpClient) { }
 
-  URLHC ="http://127.0.0.1:30081/api/v1/clinica/gestion-historias-clinicas/"
+  URLHC ="http://127.0.0.1:52485/api/v1/clinica/gestion-historias-clinicas/"
   clinicaCrear = "registerClinicalRecord"
   clinicaUpdate = "updateClinicalRecord"
   clinicaBuscar = "searchClinicalRecord"
   clinicasBuscar = "searchClinicalRecords"
   clinicaEliminar = "deleteClinicalRecord"
 
-  URLP = "http://127.0.0.1:30081/api/v1/clinica/gestion-pacientes/"
+  URLP = "http://127.0.0.1:52485/api/v1/clinica/gestion-pacientes/"
   pacienteCrear = "registerPatient"
   pacienteUpdate = "updatePatient"
   pacienteBuscar = "searchPatient"
   pacientesBuscar = "searchPatients"
   pacienteDesactivar = "deactivatePatient"
 
-  URLT = "http://127.0.0.1:30081/api/v1/clinica/gestion-tipos-tumores/"
+  URLT = "http://127.0.0.1:52485/api/v1/clinica/gestion-tipos-tumores/"
   tipoTumorCrear = "registerTypeTumor"
   tipoTumorUpdate = "updateTypeTumor"
   tipoTumorBuscar = "searchTypeTumor"

@@ -12,11 +12,11 @@ export class GenomicaService {
 
   constructor(private httpCliente: HttpClient) { }
   
-    URLG ="http://127.0.0.1:61375/genes/"
+    URLG ="http://127.0.0.1:52485/genes/"
   
-    URLVG = "http://127.0.0.1:61375/variants/"
+    URLVG = "http://127.0.0.1:52485/variants/"
   
-    URLR = "http://127.0.0.1:61375/reports/"
+    URLR = "http://127.0.0.1:52485/reports/"
   
     registrarGen(datos: Gen): Observable<any>{
     

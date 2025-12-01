@@ -11,7 +11,7 @@ export class LoginService {
 
   verificarIngreso(user: Usuario): Observable<any> {
     return this.httpCliente.post(
-      `http://127.0.0.1:30081/autenticacion/token`,
+      `http://127.0.0.1:52485/autenticacion/token`,
       user,
       { responseType: 'text' }
     );
@@ -19,7 +19,7 @@ export class LoginService {
 
   registrarUsuario(user: Usuario): Observable<any> {
     return this.httpCliente.post(
-      `http://127.0.0.1:30081/autenticacion/registro`,
+      `http://127.0.0.1:52485/autenticacion/registro`,
       user,
       { responseType: 'text' }
     );
