@@ -7,68 +7,74 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-tipos-tumor',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './tipos-tumor.component.html',
-  styleUrl: './tipos-tumor.component.css'
+  styleUrl: './tipos-tumor.component.css',
 })
 export class TiposTumorComponent implements OnInit {
-tumores: Tumor[];
-tumor : Tumor = new Tumor();
-activacionModalCrear: boolean;
-activacionModalActualizar: boolean;
+  tumores: Tumor[];
+  tumor: Tumor = new Tumor();
+  activacionModalCrear: boolean;
+  activacionModalActualizar: boolean;
 
   ngOnInit(): void {
-    
-      this.verEjemplo();
+    this.listaTipoTumors();
   }
 
-  constructor(private pacienteServicio: ClinicaService){}
+  constructor(private clinicaServicio: ClinicaService) {}
 
-  private verEjemplo(){
-    this.pacienteServicio.obtenerInfo().subscribe(dato=>{
-      console.log(dato);
-    })
-  }
-
-  crearPaciente(){
+  crearTipoTumor() {
     this.activacionModalCrear = true;
     this.activacionModalActualizar = false;
-     const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='block';
-   }
-
+    const modal = document.getElementById('modal');
+    this.tumor = new Tumor();
+    if (modal != null) {
+      modal.style.display = 'block';
+    }
   }
 
-  actualizarModal(id: string){
+  actualizarModal(id: string) {
+    const TipoTumorsCriticos = this.tumores.filter((el) => {
+      return el.identifier === id;
+    });
+    this.tumor = TipoTumorsCriticos[0];
     this.activacionModalCrear = false;
     this.activacionModalActualizar = true;
-     const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='block';
-   }
-   this.visualizar(id);
+    const modal = document.getElementById('modal');
+    if (modal != null) {
+      modal.style.display = 'block';
+    }
   }
-  cerrarModal(){
+  cerrarModal() {
     this.activacionModalCrear = false;
     this.activacionModalActualizar = false;
-        const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='none';
-   }
+    const modal = document.getElementById('modal');
+    if (modal != null) {
+      modal.style.display = 'none';
+    }
+    this.listaTipoTumors();
   }
- registrarPaciente(){
-   
- } 
-
- actualizarPaciente(){
-  
- }
-
-  desactivar(id: string){
-    
+  registrarTipoTumor() {
+    this.clinicaServicio.registrarTipoTumor(this.tumor).subscribe((dato) => {
+      this.cerrarModal();
+    });
   }
-  visualizar(id: string){
-    
+
+  actualizarTipoTumor() {
+    this.clinicaServicio.actualizarTipoTumor(this.tumor).subscribe((dato) => {
+      this.cerrarModal();
+    });
+  }
+
+  eliminar(id: string) {
+    this.clinicaServicio.eliminarTipoTumor(id).subscribe((dato) => {
+      this.listaTipoTumors();
+    });
+  }
+
+  listaTipoTumors() {
+    this.clinicaServicio.visualizarTiposTumores().subscribe((dato) => {
+      this.tumores = dato.registros;
+    });
   }
 }

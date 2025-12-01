@@ -7,86 +7,76 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-pacientes',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './pacientes.component.html',
-  styleUrl: './pacientes.component.css'
+  styleUrl: './pacientes.component.css',
 })
-export class PacientesComponent implements OnInit{
-
-pacientes: Paciente[];
-paciente : Paciente = new Paciente();
-activacionModalCrear: boolean;
-activacionModalActualizar: boolean;
+export class PacientesComponent implements OnInit {
+  pacientes: Paciente[];
+  paciente: Paciente = new Paciente();
+  activacionModalCrear: boolean;
+  activacionModalActualizar: boolean;
 
   ngOnInit(): void {
-
     this.listaPacientes();
-    
-      this.verEjemplo();
   }
 
-  constructor(private pacienteServicio: ClinicaService){}
+  constructor(private pacienteServicio: ClinicaService) {}
 
-  private verEjemplo(){
-    this.pacienteServicio.obtenerInfo().subscribe(dato=>{
-      console.log(dato);
-    })
-  }
-
-  crearPaciente(){
+  crearPaciente() {
+    this.paciente = new Paciente();
     this.activacionModalCrear = true;
     this.activacionModalActualizar = false;
-     const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='block';
-   }
-
+    const modal = document.getElementById('modal');
+    if (modal != null) {
+      modal.style.display = 'block';
+    }
   }
 
-  actualizarModal(id: string){
+  actualizarModal(id: string) {
+    const pacientesCriticos = this.pacientes.filter((el) => {
+      return el.document === id;
+    });
+    this.paciente = pacientesCriticos[0];
     this.activacionModalCrear = false;
     this.activacionModalActualizar = true;
-     const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='block';
-   }
-   this.visualizar(id);
+    const modal = document.getElementById('modal');
+    if (modal != null) {
+      modal.style.display = 'block';
+    }
   }
-  cerrarModal(){
+  cerrarModal() {
     this.activacionModalCrear = false;
     this.activacionModalActualizar = false;
-        const modal= document.getElementById("modal");
-   if(modal!=null){
-    modal.style.display='none';
-   }
+    const modal = document.getElementById('modal');
+    if (modal != null) {
+      modal.style.display = 'none';
+    }
+    this.listaPacientes();
   }
- registrarPaciente(){
-  console.log(this.paciente)
-   this.pacienteServicio.registrarPaciente(this.paciente).subscribe(dato=>{
-      console.log("dato",dato)
-   })
- } 
-
- actualizarPaciente(){
-  this.pacienteServicio.actualizarPaciente(this.paciente).subscribe(dato=>{
-
-  })
- }
-
-  desactivar(id: string){
-    this.pacienteServicio.desactivarPaciente(id).subscribe(dato=>{
-
-    })
-  }
-  visualizar(id: string){
-    this.pacienteServicio.visualizarPaciente(id).subscribe(dato=>{
-
-    })
+  registrarPaciente() {
+    this.pacienteServicio.registrarPaciente(this.paciente).subscribe((dato) => {
+      this.cerrarModal();
+    });
   }
 
-  listaPacientes(){
-    this.pacienteServicio.visualizarPacientes().subscribe(dato=>{
-      this.pacientes = dato.registros
-    })
+  actualizarPaciente() {
+    this.pacienteServicio
+      .actualizarPaciente(this.paciente)
+      .subscribe((dato) => {
+        this.cerrarModal();
+      });
+  }
+
+  desactivar(id: string) {
+    this.pacienteServicio.desactivarPaciente(id).subscribe((dato) => {
+      this.listaPacientes();
+    });
+  }
+
+  listaPacientes() {
+    this.pacienteServicio.visualizarPacientes().subscribe((dato) => {
+      this.pacientes = dato.registros;
+    });
   }
 }

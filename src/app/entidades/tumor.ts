@@ -1,6 +1,6 @@
 export class Tumor {
 
-    id: string;
+    identifier: string;
     name : string;
     systemAffected : string;
 }

@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { LoginService } from '../servicios/login.service';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../entidades/usuario';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -27,17 +28,25 @@ constructor(private router: Router, private servicioUser: LoginService) {
 ventana(){
  
   this.servicioUser.verificarIngreso(this.user).subscribe(dato=>{
-    console.log("esto: "+dato)
     if(dato!="acceso denegado"){
-      localStorage.setItem('token',dato);
+      sessionStorage.setItem('token',dato);
       
       this.router.navigateByUrl('/ingreso');
     }
     else{
-      console.log(dato)
       this.abrirModal();
       this.mensaje = dato.toUpperCase();
     }
+  })
+
+}
+
+registrar(){
+ 
+  this.servicioUser.registrarUsuario(this.user).subscribe(dato=>{
+    
+    this.cerrarModalRegistro()
+    
   })
 
 }
@@ -49,8 +58,22 @@ abrirModal(){
    }
 }
 
+abrirModalRegistro(){
+  const modal= document.getElementById("modal");
+  if(modal!=null){
+   modal.style.display='block';
+  }
+}
+
 cerrarModal(){
   const modal= document.getElementById("mensaje");
+   if(modal!=null){
+    modal.style.display='none';
+   }
+}
+
+cerrarModalRegistro(){
+  const modal= document.getElementById("modal");
    if(modal!=null){
     modal.style.display='none';
    }

@@ -2,12 +2,12 @@
   "name": "frontend-proyecto-genosentinel",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:frontend-proyecto-genosentinel": "node dist/frontend-proyecto-genosentinel/server/server.mjs"
+  "ng": "ng",
+  "start": "ng serve --host 0.0.0.0 --disable-host-check",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "serve:ssr:frontend-proyecto-genosentinel": "node dist/frontend-proyecto-genosentinel/server/server.mjs"
   },
   "private": true,
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "/autenticacion": {
-    "target": "http://localhost:8081",
+    "target": "api-gateway-service:8081",
     "secure": false,
     "changeOrigin": true
   }
