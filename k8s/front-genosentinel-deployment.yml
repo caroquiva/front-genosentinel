@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-genosentinel-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-genosentinel
+  template:
+    metadata:
+      labels:
+        app: front-genosentinel
+    spec:
+      containers:
+        - name: front-genosentinel-app
+          image: dgomez9903/front-genosentinel:1.0.0
+          ports:
+            - containerPort: 4200
